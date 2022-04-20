@@ -37,10 +37,10 @@ def get_report():
     milk_level = resources["milk"]
     coffee_level = resources["coffee"]
 
-    print(f"{water_level}")
-    print(f"{milk_level}")
-    print(f"{coffee_level}")
-    print(f"Money: {profit}")
+    print(f"Water: {water_level}\n"
+          f"Milk: {milk_level}\n"
+          f"Coffe:{coffee_level}\n"
+          f"Money: {profit}")
 
 
 def ask_for_coffe():
@@ -72,5 +72,12 @@ def check_resources(coffee_type: str):
             print(f"Sorry, there is not enough {ingredient}")
 
 
-def coin_processor():
-    pass
+def coin_processor(nquarters, ndimes, nnickles, npennies):
+    quarters = 0.25
+    dimes = 0.10
+    nickles = 0.05
+    pennies = 0.01
+
+    total = nquarters*quarters + ndimes*dimes + nnickles*nickles + npennies*pennies
+
+    return total
