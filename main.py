@@ -40,7 +40,7 @@ def get_report():
     print(f"Water: {water_level}\n"
           f"Milk: {milk_level}\n"
           f"Coffe:{coffee_level}\n"
-          f"Money: {profit}")
+          f"Money: {PROFIT}")
 
 
 def ask_for_coffe():
@@ -53,15 +53,17 @@ def ask_for_coffe():
         return 'latte'
     elif coffee_type == "cappuccino":
         print(f"You have chossen {coffee_type}.")
-        return 'capuccino'
+        return 'cappuccino'
     elif coffee_type == "off":
         print("Shutting down the Coffe Machine.")
-        return exit()
+        exit()
     elif coffee_type == "report":
-        return get_report()
+        report = get_report()
+        return report
     else:
         print("Please, select or type a propper coffe type.")
         ask_for_coffe()
+
 
 def get_coffee_ingredients(coffee_choosen):
     return MENU[coffee_choosen]["ingredients"]
@@ -72,9 +74,12 @@ def check_resources(coffee_type: str):
     for ingredient in coffee_ingredients:
         if coffee_ingredients[ingredient] > RESOURCES[ingredient]:
             print(f"Sorry, there is not enough {ingredient}.")
+            return False
+        else:
+            return True
 
 
-def money_inserted(nquarters, ndimes, nnickles, npennie):
+def money_inserted(nquarters, ndimes, nnickles, npennies):
     quarters = 0.25
     dimes = 0.10
     nickles = 0.05
@@ -86,17 +91,34 @@ def money_inserted(nquarters, ndimes, nnickles, npennie):
 
 
 def check_transaction_success(money_inserted, coffe_cost):
-    money_inserted = money_inserted
-    coffe_cost = coffe_cost
+    money = money_inserted
+    cost = coffe_cost
 
-    if money_inserted < coffe_cost:
+    if money < cost:
         print("Sorry, that's not enough money. Money refunded.")
-    elif money_inserted > coffe_cost:
-        print('Refunding money')
+        return False
+    elif money > cost:
+        refund = round(money_inserted - cost, 2)
+        print(f'Refunding money. Total ammount of {refund}')
+        return True
     else:
-        return money_inserted
-    
-    PROFIT = profit
-        
-def make_coffe():
-    ask_for_coffe()
+        return True
+
+
+def make_coffe(nquarters, ndimes, nnickles, npennies):
+    coffe_selected = ask_for_coffe()
+    resources = check_resources(coffe_selected)
+
+    if resources:
+        money = money_inserted(nquarters, ndimes, nnickles, npennies)
+        cost = MENU[coffe_selected]['cost']
+        transaction_success = check_transaction_success(money, cost)
+        money = money - cost
+        if transaction_success:
+            print(f'Here is your {coffe_selected}. Enjoy!')
+        else:
+            print('not enough minerals!')
+
+    make_coffe(nquarters, ndimes, nnickles, npennies)
+
+make_coffe(9,9,5,5)
