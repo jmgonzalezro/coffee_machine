@@ -99,6 +99,8 @@ def check_transaction_success(money_inserted, coffe_cost):
         return False
     elif money > cost:
         refund = round(money_inserted - cost, 2)
+        global PROFIT
+        PROFIT = money - cost
         print(f'Refunding money. Total ammount of {refund}')
         return True
     else:
@@ -113,12 +115,15 @@ def make_coffe(nquarters, ndimes, nnickles, npennies):
         money = money_inserted(nquarters, ndimes, nnickles, npennies)
         cost = MENU[coffe_selected]['cost']
         transaction_success = check_transaction_success(money, cost)
-        money = money - cost
         if transaction_success:
             print(f'Here is your {coffe_selected}. Enjoy!')
         else:
             print('not enough minerals!')
-
-    make_coffe(nquarters, ndimes, nnickles, npennies)
+    
+    quarters = input('How many quarters do you want to insert: ')
+    dimes = input('How many dimes do you want to insert: ')
+    nickles = input('How many nickles do you want to insert: ')
+    pennies = input('How many pennies do you want to insert: ')
+    make_coffe(int(quarters), int(dimes), int(nickles), int(pennies))
 
 make_coffe(9,9,5,5)
