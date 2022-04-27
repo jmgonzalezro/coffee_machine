@@ -76,8 +76,9 @@ def check_resources(coffee_type: str):
             print(f"Sorry, there is not enough {ingredient}.")
             return False
         else:
-            return True
-
+            return True, coffee_ingredients
+tru, resources = check_resources('latte')
+print(resouces)
 
 def money_inserted(nquarters, ndimes, nnickles, npennies):
     quarters = 0.25
@@ -118,7 +119,6 @@ def make_coffe(nquarters, ndimes, nnickles, npennies):
             print(f'Here is your {coffe_selected}. Enjoy!')
         else:
             print('not enough minerals!')
-
-    make_coffe(nquarters, ndimes, nnickles, npennies)
+make_coffe(nquarters, ndimes, nnickles, npennies)
 
 make_coffe(9,9,5,5)
